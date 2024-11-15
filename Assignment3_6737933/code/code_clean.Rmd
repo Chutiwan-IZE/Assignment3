@@ -1,0 +1,23 @@
+---
+title: "code_clean"
+author: "Chutiwan Pankram"
+date: "2024-11-15"
+output: pdf_document
+---
+```{r}
+library(readr)
+library(tidyverse)
+
+data <- read_tsv("C:/Users/chuti/OneDrive/Documents/GitHub/Assignment3_6737933/raw_data/PlateletHW.tsv")
+
+data_clean <- data %>%
+  mutate(ADP_abs = abs(ADP))
+
+data_clean$ADP_abs <- unlist(data_clean$ADP_abs)
+data_clean$ADP <- NULL
+names(data_clean)[names(data_clean) == "ADP_abs"] <- "ADP"
+data_clean <- data_clean[, c("IID", "ADP", setdiff(names(data_clean), c("IID", "ADP")))]
+
+write_tsv(data_clean, "C:/Users/chuti/OneDrive/Documents/GitHub/Assignment3_6737933/clean_data/PlateletHW_clean.tsv")
+```
+
